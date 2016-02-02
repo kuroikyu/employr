@@ -3,10 +3,168 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="">
+	<title>First Game</title>
+	
+	<!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 </head>
 <body>
-	<h1>Hello bitc... World</h1>
+	<div class="container">
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card blue-grey lighten-2">
+					<div class="card-content white-text">
+						<span class="card-title" id="currencyName">Count</span>
+						<p> <b>The current amount is <span id="totalAmount">0</span>.</b></p>
+						<div class="divider"></div>
+						<p class="blue-grey-text"> The current income is <span id="autoStrength">0</span> per second.</p>
+						<p class="blue-grey-text"> The current autoclick speed is <span id="autoSpeed">0</span>.</p>
+						<p class="blue-grey-text"> The current click strength is <span id="clickStrength">0</span>.</p>
+					</div>
+					<div class="card-action">
+						<a id="add-button" class="waves-effect waves-light btn blue-grey"><i class="material-icons left">mouse</i>Add</a>
+						<a id="AI-button" class="waves-effect waves-light btn blue"><i class="material-icons left">add_circle</i>Speed</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col s8">
+				<div class="card green lighten-2">
+					<div class="card-content white-text">
+						<span class="card-title">
+							<span id="first-purch-name">Card Title</span>
+							<span class="badge white-text" id=first-purch-amount>0</span>
+						</span>
+						<div class="row">
+							<div class="col s6">
+								<p>Income: <span id="first-purch-strength">0</span> per second</p>
+								<p>Cost: <span id="first-purch-cost">0</span></p>
+							</div>
+						</div>
+						<div class="progress green lighten-3">
+							<div class="determinate green" style="width: 0%" id="first-purch-progress"></div>
+						</div>
+					</div>
+					<div class="card-action">
+						<a id="first-purch" class="waves-effect waves-light btn green disabled"><i class="material-icons left">add_circle</i>Buy</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s4">
+				<div class="card green lighten-1">
+					<div class="card-content white-text">
+						<span class="card-title">
+							<span id="first-purch-upgd-name">Upgrade</span>
+							<span class="badge white-text" id=first-purch-upgd-amount>0</span>
+						</span>
+						<div class="row">
+							<div class="col s6">
+								<p>Required amount: <span id="first-purch-upgd-minAmount">0</span></p>
+								<p>Cost: <span id="first-purch-upgd-cost">0</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="card-action">
+						<a id="T1upgrade" class="waves-effect waves-light btn green darken-3 disabled"><i class="material-icons left">arrow_upward</i><span>Upgd</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col s8">
+				<div class="card deep-purple lighten-2">
+					<div class="card-content white-text">
+						<span class="card-title">
+							<span id="second-purch-name">Card Title</span>
+							<span class="badge white-text" id=second-purch-amount>0</span>
+						</span>
+						<div class="row">
+							<div class="col s6">
+								<p>Income: <span id="second-purch-strength">0</span> per second</p>
+								<p>Cost: <span id="second-purch-cost">0</span></p>
+							</div>
+						</div>
+						<div class="progress deep-purple lighten-3">
+							<div class="determinate deep-purple" style="width: 0%" id="second-purch-progress"></div>
+						</div>
+					</div>
+					<div class="card-action">
+						<a id="second-purch" class="waves-effect waves-light btn deep-purple disabled"><i class="material-icons left">add_circle</i>Buy</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s4">
+				<div class="card deep-purple lighten-1">
+					<div class="card-content white-text">
+						<span class="card-title">
+							<span id="second-purch-upgd-name">Card Title</span>
+							<span class="badge white-text" id=second-purch-upgd-amount>0</span>
+						</span>
+						<div class="row">
+							<div class="col s6">
+								<p>Required amount: <span id="second-purch-upgd-minAmount">0</span></p>
+								<p>Cost: <span id="second-purch-upgd-cost">0</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="card-action">
+						<a id="T2upgrade" class="waves-effect waves-light btn deep-purple darken-3 disabled"><i class="material-icons left">arrow_upward</i><span>Upgd</span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s8">
+				<div class="card red lighten-2">
+					<div class="card-content white-text">
+						<span class="card-title">
+							<span id="third-purch-name">Card Title</span>
+							<span class="badge white-text" id=third-purch-amount>0</span>
+						</span>
+						<div class="row">
+							<div class="col s6">
+								<p>Income: <span id="third-purch-strength">0</span> per second</p>
+								<p>Cost: <span id="third-purch-cost">0</span></p>
+							</div>
+						</div>
+						<div class="progress red lighten-3">
+							<div class="determinate red" style="width: 0%" id="third-purch-progress"></div>
+						</div>
+					</div>
+					<div class="card-action">
+						<a id="third-purch" class="waves-effect waves-light btn red disabled"><i class="material-icons left">add_circle</i>Buy</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<!--TEMP-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+	<!-- Custom JavaScript -->
+	<script type="text/javascript" src="js/game.js"></script>
 </body>
 </html>
