@@ -103,7 +103,7 @@ var Company = function(options) {
 			Game.market.append(this.row);
 
 			this.button = $("<div/>")
-			.addClass("waves-effect waves-light btn-large")
+			.attr('class', 'waves-effect waves-light btn-large')			
 			.text(this.name + " - " + this.cost)
 			.click(function(){
 				self.buy();
@@ -156,9 +156,9 @@ var Worker = function(options) {
 			Game.roster.append(this.row);
 
 			this.button = $("<div/>")
-			.addClass("waves-effect waves-light btn-large")
+			.attr('class', 'waves-effect waves-light btn-large')			
 			.text(this.name + " - " + this.cost)
-			.click(function(){
+			.click(function() {
 				self.buy();
 			});
 
