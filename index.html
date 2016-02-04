@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,30 +16,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
+
 <body>
-	<div class="row">
+	<div class="row indigo white-text z-depth-1">
 		<div class="container">
 			<div class="col s12 center">
 				<h1 id="currency-display">Currency</h1>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="container">
-			<div class="col s12 center">
 				<h4><span id="cps-display"></span> /s</h4>
 				<h4>Available workload: <span id="workload-display"></span></h4>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s6 purple">
+		<div class="col s6 ">
 			<div class="container">
 				<h5>Workers</h5>
 				<div id="roster-container"></div>
 			</div>
 		</div>
-		<div class="col s6 orange">
+		<div class="col s6 ">
 			<div class="container">
 				<h5>Clients</h5>
 				<div id="market-container"></div>
@@ -46,27 +42,18 @@
 		</div>
 	</div>
 
-	<!--
-	- header with title, currency, etc
-	- section below the header with no. of hours / required no. of hours
-	- 2 main columns
-	- left workers/employees
-	- right clients
-
-	- upgrades?
--->
 
 
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<!--TEMP-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 
-<!--Import jQuery before materialize.js-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<!--TEMP-->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
-<!-- Compiled and minified JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-
-<!-- Custom JavaScript -->
-<script type="text/javascript" src="js/game.js"></script>
+	<!-- Custom JavaScript -->
+	<script type="text/javascript" src="js/game.js"></script>
 </body>
+
 </html>
