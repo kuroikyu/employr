@@ -32,35 +32,35 @@ var Game = {
 		// this.handle = window.setInterval(function() {
 		// 	self._tick();
 		// }, 10);
-},
+	},
 
-_tick: function() {
-	$.each(this.companies, function(index, company) {
-		company.produce();
-		company.check();
-	});
+	_tick: function() {
+		$.each(this.companies, function(index, company) {
+			company.produce();
+			company.check();
+		});
 
-	$.each(this.workers, function(index, worker) {
-		worker.produce();
-		worker.check();
-	});
+		$.each(this.workers, function(index, worker) {
+			worker.produce();
+			worker.check();
+		});
 
-	this.count.text(this.currency.toFixed(2));
-},
+		this.count.text(this.currency.toFixed(2));
+	},
 
-cps: function() {
-	var cps = 0;
+	cps: function() {
+		var cps = 0;
 
-	$.each(this.companies, function(index, company) {
-		cps += company.production * company.quantity;
-	});
+		$.each(this.companies, function(index, company) {
+			cps += company.production * company.quantity;
+		});
 
-	$.each(this.workers, function(index, worker) {
-		cps += worker.production * worker.quantity;
-	});
+		$.each(this.workers, function(index, worker) {
+			cps += worker.production * worker.quantity;
+		});
 
-	this.cpsDisplay.text(cps);
-}
+		this.cpsDisplay.text(cps);
+	}
 
 };
 
@@ -70,13 +70,14 @@ var Company = function(options) {
 		increase: 1.15,
 
 		button: undefined,
+		title: undefined,
 
 		produce: function() {
 			Game.currency += this.quantity * this.production / 100;
 		},
 
 		check: function() {
-			this.button.toggleClass('disabled', this.cost > Game.currency);	
+			this.button.toggleClass('disabled', this.cost > Game.currency);
 		},
 
 		buy: function() {
@@ -94,20 +95,45 @@ var Company = function(options) {
 		init: function() {
 			var self = this;
 			var row = undefined;
+			var card = undefined;
+			var cardContent = undefined;
+			var cardTitle = undefined;
+			var pText = undefined;
+			var cardAction = undefined;
 
+			// Create card
 			this.row = $("<div/>")
-			.addClass("row")
+			.attr('class', 'row');
 
-			Game.market.append(this.row);
+			this.card = $("<div/>")
+			.attr('class', 'card');
+
+			this.cardContent = $("<div/>")
+			.attr('class', 'card-content');
+
+			this.cardTitle = $('<span/>')
+			.attr('class', 'card-title');
+
+			this.pText = $('<p/>');
+
+			this.cardAction = $("<div/>")
+			.attr('class', 'card-action');
 
 			this.button = $("<div/>")
-			.attr('class', 'waves-effect waves-light btn-large')			
+			.attr('class', 'waves-effect waves-light btn-large')
 			.text(this.name + " - " + this.cost)
 			.click(function(){
 				self.buy();
 			});
 
-			this.row.append(this.button);
+			// Build card
+			Game.market.append(this.row);
+			this.row.append(this.card);
+			this.card.append(this.cardContent);
+			this.cardContent.append(this.cardTitle);
+			this.cardContent.append(this.pText);
+			this.card.append(this.cardAction);
+			this.cardAction.append(this.button);
 
 			this.check();
 
@@ -129,7 +155,7 @@ var Worker = function(options) {
 		},
 
 		check: function() {
-			this.button.toggleClass('disabled', this.cost > Game.currency);	
+			this.button.toggleClass('disabled', this.cost > Game.currency);
 		},
 
 		buy: function() {
@@ -146,20 +172,45 @@ var Worker = function(options) {
 		init: function() {
 			var self = this;
 			var row = undefined;
+			var card = undefined;
+			var cardContent = undefined;
+			var cardTitle = undefined;
+			var pText = undefined;
+			var cardAction = undefined;
 
+			// Create card
 			this.row = $("<div/>")
-			.addClass("row")
+			.attr('class', 'row');
 
-			Game.roster.append(this.row);
+			this.card = $("<div/>")
+			.attr('class', 'card');
+
+			this.cardContent = $("<div/>")
+			.attr('class', 'card-content');
+
+			this.cardTitle = $('<span/>')
+			.attr('class', 'card-title');
+
+			this.pText = $('<p/>');
+
+			this.cardAction = $("<div/>")
+			.attr('class', 'card-action');
 
 			this.button = $("<div/>")
-			.attr('class', 'waves-effect waves-light btn-large')			
+			.attr('class', 'waves-effect waves-light btn-large')
 			.text(this.name + " - " + this.cost)
-			.click(function() {
+			.click(function(){
 				self.buy();
 			});
 
-			this.row.append(this.button);
+			// Build card
+			Game.roster.append(this.row);
+			this.row.append(this.card);
+			this.card.append(this.cardContent);
+			this.cardContent.append(this.cardTitle);
+			this.cardContent.append(this.pText);
+			this.card.append(this.cardAction);
+			this.cardAction.append(this.button);
 
 			this.check();
 
@@ -170,39 +221,39 @@ var Worker = function(options) {
 };
 
 _companies = [
-{
-	name: "Small company",
-	cost: 10,
-	production: 1
-},
-{
-	name: "Medium company",
-	cost: 20,
-	production: 3
-},
-{
-	name: "Big company",
-	cost: 50,
-	production: 5
-}
+	{
+		name: "Small company",
+		cost: 10,
+		production: 1
+	},
+	{
+		name: "Medium company",
+		cost: 20,
+		production: 3
+	},
+	{
+		name: "Big company",
+		cost: 50,
+		production: 5
+	}
 ];
 
 _workers = [
-{
-	name: "Junior employee",
-	cost: 10,
-	production: 1
-},
-{
-	name: "Senior employee",
-	cost: 20,
-	production: 3
-},
-{
-	name: "Master & Commander",
-	cost: 50,
-	production: 5
-}
+	{
+		name: "Junior employee",
+		cost: 10,
+		production: 1
+	},
+	{
+		name: "Senior employee",
+		cost: 20,
+		production: 3
+	},
+	{
+		name: "Master & Commander",
+		cost: 50,
+		production: 5
+	}
 ];
 
 Game.init(_workers, _companies);
