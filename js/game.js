@@ -6,7 +6,7 @@ var Game = {
 	market: undefined,
 	cpsDisplay: undefined,
 
-	handle: undefined,
+	// handle: undefined,
 
 	workers: [],
 	companies: [],
@@ -29,40 +29,38 @@ var Game = {
 			self.companies.push(newCompany);
 		});
 
-		this.handle = window.setInterval(function() {
-			self._tick();
-		}, 10);
-	},
+		// this.handle = window.setInterval(function() {
+		// 	self._tick();
+		// }, 10);
+},
 
-	_tick: function() {
-		$.each(this.companies, function(index, company) {
-			company.produce();
-			company.check();
-		});
+_tick: function() {
+	$.each(this.companies, function(index, company) {
+		company.produce();
+		company.check();
+	});
 
-		$.each(this.workers, function(index, worker) {
-			worker.produce();
-			worker.check();
-		});
+	$.each(this.workers, function(index, worker) {
+		worker.produce();
+		worker.check();
+	});
 
-		this.count.text(this.currency.toFixed(2));
-	},
+	this.count.text(this.currency.toFixed(2));
+},
 
-	cps: function() {
-		var cps = 0;
+cps: function() {
+	var cps = 0;
 
-		$.each(this.companies, function(index, company) {
-			cps += company.production * company.quantity;
-			console.log(cps);
-		});
+	$.each(this.companies, function(index, company) {
+		cps += company.production * company.quantity;
+	});
 
-		$.each(this.workers, function(index, worker) {
-			cps += worker.production * worker.quantity;
-			console.log(cps);
-		});
+	$.each(this.workers, function(index, worker) {
+		cps += worker.production * worker.quantity;
+	});
 
-		this.cpsDisplay.text(cps);
-	}
+	this.cpsDisplay.text(cps);
+}
 
 };
 
@@ -141,7 +139,6 @@ var Worker = function(options) {
 				this.quantity++;
 				this.cost = Math.ceil(this.cost * this.increase);
 				this.button.text(this.name + ' - ' + this.cost);
-				console.log('hi');
 				Game.cps();
 			};
 		},
@@ -215,6 +212,7 @@ Game.init(_workers, _companies);
 
 
 
-// (function refreshUI() {
-// 	setTimeout(refreshUI, 10);
-// })();
+(function refreshUI() {
+	Game._tick();
+	setTimeout(refreshUI, 10);
+})();
