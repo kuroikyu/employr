@@ -79,7 +79,8 @@ var Company = function(options) {
 
 				this.quantity++;
 				this.cost = Math.ceil(this.cost * this.increase);
-				this.button.text('Sign a project - ' + this.cost);
+				this.button.text('Sign another project - ' + this.cost);
+				this.spanBadge.text("x" + this.quantity);
 
 				Game.cps();
 			};
@@ -91,6 +92,7 @@ var Company = function(options) {
 			var card = undefined;
 			var cardContent = undefined;
 			var cardTitle = undefined;
+			var spanBadge = undefined;
 			var pText = undefined;
 			var cardAction = undefined;
 
@@ -108,15 +110,19 @@ var Company = function(options) {
 			.attr('class', 'card-title')
 			.text(this.name);
 
+			this.spanBadge = $('<span/>')
+			.attr('class', 'badge')
+			.text("x" + this.quantity);
+
 			this.pText = $('<p/>');
 
 			this.cardAction = $("<div/>")
 			.attr('class', 'card-action');
 
-			this.button = $("<div/>")
+			this.button = $("<a/>")
 			.attr('class', 'waves-effect waves-light btn-large')
 			.text('Sign a project - ' + this.cost)
-			.click(function(){
+			.click(function() {
 				self.buy();
 			});
 
@@ -129,6 +135,7 @@ var Company = function(options) {
 			this.cardContent
 			.append(this.cardTitle)
 			.append(this.pText);
+			this.cardTitle.append(this.spanBadge);
 			this.cardAction.append(this.button);
 
 			this.check();
@@ -158,6 +165,8 @@ var Worker = function(options) {
 				this.quantity++;
 				this.cost = Math.ceil(this.cost * this.increase);
 				this.button.text('Hire - ' + this.cost);
+				this.spanBadge.text("x" + this.quantity);
+
 				Game.cps();
 			};
 		},
@@ -168,6 +177,7 @@ var Worker = function(options) {
 			var card = undefined;
 			var cardContent = undefined;
 			var cardTitle = undefined;
+			var spanBadge = undefined;
 			var pText = undefined;
 			var cardAction = undefined;
 
@@ -185,15 +195,19 @@ var Worker = function(options) {
 			.attr('class', 'card-title')
 			.text(this.name);
 
+			this.spanBadge = $('<span/>')
+			.attr('class', 'badge')
+			.text("x" + this.quantity);
+
 			this.pText = $('<p/>');
 
 			this.cardAction = $("<div/>")
 			.attr('class', 'card-action');
 
-			this.button = $("<div/>")
+			this.button = $("<a/>")
 			.attr('class', 'waves-effect waves-light btn-large')
 			.text("Hire - " + this.cost)
-			.click(function(){
+			.click(function() {
 				self.buy();
 			});
 
@@ -206,6 +220,7 @@ var Worker = function(options) {
 			this.cardContent
 			.append(this.cardTitle)
 			.append(this.pText);
+			this.cardTitle.append(this.spanBadge);
 			this.cardAction.append(this.button);
 
 			this.check();
@@ -219,17 +234,17 @@ var Worker = function(options) {
 _companies = [
 	{
 		name: "Small company",
-		cost: 1,
+		cost: 4,
 		production: 1
 	},
 	{
 		name: "Medium company",
-		cost: 2,
+		cost: 12,
 		production: 3
 	},
 	{
 		name: "Big company",
-		cost: 5,
+		cost: 24,
 		production: 5
 	}
 ];
@@ -238,17 +253,17 @@ _workers = [
 	{
 		name: "Intern",
 		cost: 10,
-		production: 1
+		production: 4
 	},
 	{
 		name: "Junior employee",
 		cost: 20,
-		production: 1
+		production: 6
 	},
 	{
 		name: "Senior employee",
 		cost: 50,
-		production: 1.75
+		production: 8
 	}
 ];
 
