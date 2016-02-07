@@ -79,6 +79,7 @@ var Company = function(options) {
 
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
+        this.spanBadge.text("x" + this.quantity);
         this.spanProd.html('Income: +<strong>' + this.production + '</strong>/s');
         this.spanCost.html('Req. workload: <strong>' + this.cost + '</strong>');
 
