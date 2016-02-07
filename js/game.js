@@ -79,8 +79,8 @@ var Company = function(options) {
 
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
-        this.button.text('Sign another project - ' + this.cost);
-        this.spanBadge.text("x" + this.quantity);
+        this.spanProd.html('Income: +<strong>' + this.production + '</strong>/s');
+        this.spanCost.html('Req. workload: <strong>' + this.cost + '</strong>');
 
         Game.cps();
       };
@@ -93,38 +93,64 @@ var Company = function(options) {
       var cardContent = undefined;
       var cardTitle = undefined;
       var spanBadge = undefined;
-      var pText = undefined;
+      var pProd = undefined;
+      var spanProd = undefined;
+      var pCost = undefined;
+      var spanCost = undefined;
       var cardAction = undefined;
 
       // Create card
-      this.row = $("<div/>")
-        .attr('class', 'row');
+      this.row = $("<div/>", {
+        class: 'row'
+      });
 
-      this.card = $("<div/>")
-        .attr('class', 'card');
+      this.card = $("<div/>", {
+        class: 'card'
+      });
 
-      this.cardContent = $("<div/>")
-        .attr('class', 'card-content');
+      this.cardContent = $("<div/>", {
+        class: 'card-content'
+      });
 
-      this.cardTitle = $('<span/>')
-        .attr('class', 'card-title')
-        .text(this.name);
+      this.cardTitle = $('<span/>', {
+        class: 'card-title',
+        text: this.name
+      });
 
-      this.spanBadge = $('<span/>')
-        .attr('class', 'badge')
-        .text("x" + this.quantity);
+      this.spanBadge = $('<span/>', {
+        class: 'badge',
+        text: 'x' + this.quantity
+      });
 
-      this.pText = $('<p/>');
+      this.pProd = $('<p/>', {
+        class: 'flow-text',
+        html: '<i class="material-icons left small">attach_money</i>'
+      });
 
-      this.cardAction = $("<div/>")
-        .attr('class', 'card-action');
+      this.spanProd = $('<span/>', {
+        html: 'Income: +<strong>' + this.production + '</strong>/s'
+      });
 
-      this.button = $("<a/>")
-        .attr('class', 'waves-effect waves-light btn')
-        .text('Sign a project - ' + this.cost)
-        .click(function() {
+      this.pCost = $('<p/>', {
+        class: 'flow-text',
+        html: '<i class="material-icons left small">people</i>'
+      });
+
+      this.spanCost = $('<span/>', {
+        html: 'Req. workload: <strong>' + this.cost + '</strong>'
+      });
+
+      this.cardAction = $("<div/>", {
+        class: 'card-action'
+      });
+
+      this.button = $("<a/>", {
+        class: 'waves-effect waves-light btn indigo',
+        text: 'Sign a project',
+        click: function() {
           self.buy();
-        });
+        }
+      });
 
       // Build card
       Game.market.append(this.row);
@@ -134,7 +160,8 @@ var Company = function(options) {
         .append(this.cardAction);
       this.cardContent
         .append(this.cardTitle)
-        .append(this.pText);
+        .append(this.pProd.append(this.spanProd))
+        .append(this.pCost.append(this.spanCost));
       this.cardTitle.append(this.spanBadge);
       this.cardAction.append(this.button);
 
@@ -164,8 +191,9 @@ var Worker = function(options) {
 
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
-        this.button.text('Hire - ' + this.cost);
         this.spanBadge.text("x" + this.quantity);
+        this.spanProd.html('Workload: +<strong>' + this.production + '</strong>');
+        this.spanCost.html('Cost: <strong>' + this.cost + '</strong>');
 
         Game.cps();
       };
@@ -178,38 +206,64 @@ var Worker = function(options) {
       var cardContent = undefined;
       var cardTitle = undefined;
       var spanBadge = undefined;
-      var pText = undefined;
+      var pProd = undefined;
+      var spanProd = undefined;
+      var pCost = undefined;
+      var spanCost = undefined;
       var cardAction = undefined;
 
       // Create card
-      this.row = $("<div/>")
-        .attr('class', 'row');
+      this.row = $("<div/>", {
+        class: 'row'
+      });
 
-      this.card = $("<div/>")
-        .attr('class', 'card');
+      this.card = $("<div/>", {
+        class: 'card'
+      });
 
-      this.cardContent = $("<div/>")
-        .attr('class', 'card-content');
+      this.cardContent = $("<div/>", {
+        class: 'card-content'
+      });
 
-      this.cardTitle = $('<span/>')
-        .attr('class', 'card-title')
-        .text(this.name);
+      this.cardTitle = $('<span/>', {
+        class: 'card-title',
+        text: this.name
+      });
 
-      this.spanBadge = $('<span/>')
-        .attr('class', 'badge')
-        .text("x" + this.quantity);
+      this.spanBadge = $('<span/>', {
+        class: 'badge',
+        text: 'x' + this.quantity
+      });
 
-      this.pText = $('<p/>');
+      this.pProd = $('<p/>', {
+        class: 'flow-text',
+        html: '<i class="material-icons left small">person</i>'
+      });
 
-      this.cardAction = $("<div/>")
-        .attr('class', 'card-action');
+      this.spanProd = $('<span/>', {
+        html: 'Workload: +<strong>' + this.production + '</strong>'
+      });
 
-      this.button = $("<a/>")
-        .attr('class', 'waves-effect waves-light btn')
-        .text("Hire - " + this.cost)
-        .click(function() {
+      this.pCost = $('<p/>', {
+        class: 'flow-text',
+        html: '<i class="material-icons left small">shopping_cart</i>'
+      });
+
+      this.spanCost = $('<span/>', {
+        html: 'Cost: <strong>' + this.cost + '</strong>'
+      });
+
+      this.cardAction = $("<div/>", {
+        class: 'card-action'
+      });
+
+      this.button = $("<a/>", {
+        class: 'waves-effect waves-light btn indigo',
+        text: 'Hire',
+        click: function() {
           self.buy();
-        });
+        }
+      });
 
       // Build card
       Game.roster.append(this.row);
@@ -219,7 +273,8 @@ var Worker = function(options) {
         .append(this.cardAction);
       this.cardContent
         .append(this.cardTitle)
-        .append(this.pText);
+        .append(this.pProd.append(this.spanProd))
+        .append(this.pCost.append(this.spanCost));
       this.cardTitle.append(this.spanBadge);
       this.cardAction.append(this.button);
 
