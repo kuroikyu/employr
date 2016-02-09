@@ -14,25 +14,35 @@
 
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style media="screen">
-.noselect {
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none;   /* Chrome/Safari/Opera */
-	-khtml-user-select: none;    /* Konqueror */
-	-moz-user-select: none;      /* Firefox */
-	-ms-user-select: none;       /* IE/Edge */
-	user-select: none;           /* non-prefixed version, currently
+	<style media="screen">
+		.noselect {
+			-webkit-touch-callout: none;
+			/* iOS Safari */
+			-webkit-user-select: none;
+			/* Chrome/Safari/Opera */
+			-khtml-user-select: none;
+			/* Konqueror */
+			-moz-user-select: none;
+			/* Firefox */
+			-ms-user-select: none;
+			/* IE/Edge */
+			user-select: none;
+			/* non-prefixed version, currently
 																not supported by any browser */
-}
-</style>
+		}
+
+		#roster-container .card-panel .row {
+			margin-bottom: 0;
+		}
+	</style>
 </head>
 
 <body class="grey lighten-3">
 	<div class="row indigo white-text z-depth-1">
 		<div class="container">
 			<div class="col s12 center">
-				<h1><span id="currency-display"></span></h1>
-				<h4>Income: <span id="cps-display"></span>/s</h4>
+				<h1>$<span id="currency-display"></span></h1>
+				<h4>Income: $<span id="cps-display"></span>/s</h4>
 				<h4>Available workload: <span id="workload-display"></span></h4>
 			</div>
 		</div>
@@ -42,15 +52,25 @@
 			<div class="container">
 				<h5>Workers</h5>
 				<div id="roster-container">
-					<div class="row" style="opacity:.5">
-						<div class="card-panel flow-text hoverable superTooltipped noselect" data-position="right" data-delay="50"
-						data-tooltip='<p><i class="material-icons left">person</i>Workload +<strong>12</strong></p>'>
-							<span>Alpha Tester</span><strong class="grey-text right">4</strong>
-							<br>
-							<small><i class="material-icons left small">attach_money</i>500</small>
 
+					<div class="row" style="opacity:.5">
+						<div class="card-panel hoverable flow-text superTooltipped noselect" data-position="bottom" data-delay="50" data-tooltip='<p><i class="material-icons left">person</i>Workload +<strong>12</strong></p>'>
+							<div class="row valign-wrapper">
+								<div class="col s2">
+									<img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img">
+								</div>
+								<div class="col s8">
+									<span>Alpha Tester</span>
+									<br>
+									<small>$500</small>
+								</div>
+								<div class="col s2">
+									<strong class="grey-text right">4</strong>
+								</div>
+							</div>
 						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
