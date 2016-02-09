@@ -219,7 +219,10 @@ var Worker = function(options) {
       });
 
       this.card = $("<div/>", {
-        class: 'card'
+        class: 'card hoverable',
+        click: function() {
+          self.buy();
+        }
       });
 
       this.cardContent = $("<div/>", {
@@ -260,10 +263,7 @@ var Worker = function(options) {
 
       this.button = $("<a/>", {
         class: 'waves-effect waves-light btn indigo',
-        text: 'Hire',
-        click: function() {
-          self.buy();
-        }
+        text: 'Hire'
       });
 
       // Build card
@@ -331,9 +331,9 @@ Game.init(_workers, _companies);
 
 $('#currency-display').click(function() {
   _workers.push({
-    name:"Betatester",
-    cost:1,
-    production:12
+    name: "Betatester",
+    cost: 1,
+    production: 12
   });
   Game.workers.push(Worker(_workers[_workers.length - 1]).init());
 });

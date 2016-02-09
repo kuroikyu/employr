@@ -14,7 +14,17 @@
 
 	<!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<style media="screen">
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* IE/Edge */
+	user-select: none;           /* non-prefixed version, currently
+																not supported by any browser */
+}
+</style>
 </head>
 
 <body class="grey lighten-3">
@@ -31,7 +41,17 @@
 		<div class="col s12 m6">
 			<div class="container">
 				<h5>Workers</h5>
-				<div id="roster-container"></div>
+				<div id="roster-container">
+					<div class="row" style="opacity:.5">
+						<div class="card-panel flow-text hoverable superTooltipped noselect" data-position="right" data-delay="50"
+						data-tooltip='<p><i class="material-icons left">person</i>Workload +<strong>12</strong></p>'>
+							<span>Alpha Tester</span><strong class="grey-text right">4</strong>
+							<br>
+							<small><i class="material-icons left small">attach_money</i>500</small>
+
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="col s12 m6">
@@ -53,6 +73,7 @@
 
 	<!-- Custom JavaScript -->
 	<script type="text/javascript" src="js/game.js"></script>
+	<script type="text/javascript" src="js/superTooltip.js"></script>
 </body>
 
 </html>
