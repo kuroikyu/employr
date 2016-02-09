@@ -180,9 +180,10 @@ var Worker = function(options) {
     increase: 1.11,
 
     button: undefined,
+    card: undefined,
 
     check: function() {
-      this.button.toggleClass('disabled', this.cost > Game.currency);
+      this.card.toggleClass('disabled', this.cost > Game.currency);
     },
 
     buy: function() {
@@ -192,9 +193,8 @@ var Worker = function(options) {
 
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
-        this.spanBadge.text("x" + this.quantity);
-        this.spanProd.html('Workload: +<strong>' + this.production + '</strong>');
-        this.spanCost.html('Cost: <strong>' + this.cost + '</strong>');
+        this.strongNumber.text(this.quantity);
+        this.colContent.html('<span>' + this.name + '</span> <br> <small>$' + this.cost + '</small>');
 
         Game.cps();
       };
@@ -203,81 +203,61 @@ var Worker = function(options) {
     init: function() {
       var self = this;
       var row = undefined;
-      var card = undefined;
-      var cardContent = undefined;
-      var cardTitle = undefined;
-      var spanBadge = undefined;
-      var pProd = undefined;
-      var spanProd = undefined;
-      var pCost = undefined;
-      var spanCost = undefined;
-      var cardAction = undefined;
+      var cardPanel = undefined;
+      var rowValign = undefined;
+      var colPicture = undefined;
+      var picture = undefined;
+      var colContent = undefined;
+      var content = undefined;
+      var colAmount = undefined;
+      var strongNumber = undefined;
 
-      // Create card
-      this.row = $("<div/>", {
-        class: 'row'
+      this.row = $('<div />', {
+        class: "row"
       });
-
-      this.card = $("<div/>", {
-        class: 'card hoverable',
+      this.cardPanel = $('<div />', {
+        class: "card-panel hoverable flow-text superTooltipped noselect",
+        "data-position": "right",
+        "data-delay": "50",
+        "data-tooltip": '<p><i class="material-icons left">person</i>Workload +<strong>' + this.production + '</strong></p>',
         click: function() {
           self.buy();
         }
       });
-
-      this.cardContent = $("<div/>", {
-        class: 'card-content'
+      this.rowValign = $('<div />', {
+        class: "row valign-wrapper"
       });
-
-      this.cardTitle = $('<span/>', {
-        class: 'card-title',
-        text: this.name
+      this.colPicture = $('<div />', {
+        class: "col s2"
       });
-
-      this.spanBadge = $('<span/>', {
-        class: 'badge',
-        text: 'x' + this.quantity
+      this.picture = $('<img />', {
+        class: "circle responsive-img valign",
+        src: "img/" + this.imgUrl
       });
-
-      this.pProd = $('<p/>', {
-        class: 'flow-text',
-        html: '<i class="material-icons left small">person</i>'
+      this.colContent = $('<div />', {
+        class: "col s8",
+        html: '<span>' + this.name + '</span> <br> <small>$' + this.cost + '</small>'
       });
-
-      this.spanProd = $('<span/>', {
-        html: 'Workload: +<strong>' + this.production + '</strong>'
+      this.colAmount = $('<div />', {
+        class: "col s2"
       });
-
-      this.pCost = $('<p/>', {
-        class: 'flow-text',
-        html: '<i class="material-icons left small">shopping_cart</i>'
-      });
-
-      this.spanCost = $('<span/>', {
-        html: 'Cost: <strong>' + this.cost + '</strong>'
-      });
-
-      this.cardAction = $("<div/>", {
-        class: 'card-action'
-      });
-
-      this.button = $("<a/>", {
-        class: 'waves-effect waves-light btn indigo',
-        text: 'Hire'
+      this.strongNumber = $('<strong />', {
+        class: "grey-text right",
+        text: this.quantity
       });
 
       // Build card
       Game.roster.append(this.row);
-      this.row.append(this.card);
-      this.card
-        .append(this.cardContent)
-        .append(this.cardAction);
-      this.cardContent
-        .append(this.cardTitle)
-        .append(this.pProd.append(this.spanProd))
-        .append(this.pCost.append(this.spanCost));
-      this.cardTitle.append(this.spanBadge);
-      this.cardAction.append(this.button);
+      this.row.append(this.cardPanel);
+      this.cardPanel.append(this.rowValign);
+      this.rowValign
+        .append(this.colPicture)
+        .append(this.colContent)
+        .append(this.colAmount);
+      this.colPicture.append(this.picture);
+      this.colAmount.append(this.strongNumber);
+
+      this.card = this.cardPanel;
 
       this.check();
 
@@ -290,29 +270,35 @@ var Worker = function(options) {
 _companies = [{
   name: "Small company",
   cost: 4,
-  production: 1
+  production: 1,
+  imgUrl: "default.jpg"
 }, {
   name: "Medium company",
   cost: 12,
-  production: 3
+  production: 3,
+  imgUrl: "default.jpg"
 }, {
   name: "Big company",
   cost: 24,
-  production: 5
+  production: 5,
+  imgUrl: "default.jpg"
 }];
 
 _workers = [{
   name: "Intern",
   cost: 10,
-  production: 4
+  production: 4,
+  imgUrl: "default.jpg"
 }, {
   name: "Junior employee",
   cost: 20,
-  production: 6
+  production: 6,
+  imgUrl: "default.jpg"
 }, {
   name: "Senior employee",
   cost: 50,
-  production: 8
+  production: 8,
+  imgUrl: "default.jpg"
 }];
 
 Game.init(_workers, _companies);
@@ -331,9 +317,10 @@ Game.init(_workers, _companies);
 
 $('#currency-display').click(function() {
   _workers.push({
-    name: "Betatester",
+    name: "Mega-hacker-uber-god",
     cost: 1,
-    production: 12
+    production: 12,
+    imgUrl: "kuroi.jpg"
   });
   Game.workers.push(Worker(_workers[_workers.length - 1]).init());
 });

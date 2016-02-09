@@ -34,6 +34,22 @@
 		#roster-container .card-panel .row {
 			margin-bottom: 0;
 		}
+
+		.card-panel.hoverable {
+			opacity: 1;
+			transition: opacity .25s ease-out;
+			-moz-transition: opacity .25s ease-out;
+			-webkit-transition: opacity .25s ease-out;
+			-o-transition: opacity .25s ease-out;
+		}
+
+		.card-panel.hoverable.disabled {
+			opacity: 0.4;
+			transition: opacity .5s ease-out;
+			-moz-transition: opacity .5s ease-out;
+			-webkit-transition: opacity .5s ease-out;
+			-o-transition: opacity .5s ease-out;
+		}
 	</style>
 </head>
 
@@ -51,27 +67,7 @@
 		<div class="col s12 m6">
 			<div class="container">
 				<h5>Workers</h5>
-				<div id="roster-container">
-
-					<div class="row" style="opacity:.5">
-						<div class="card-panel hoverable flow-text superTooltipped noselect" data-position="bottom" data-delay="50" data-tooltip='<p><i class="material-icons left">person</i>Workload +<strong>12</strong></p>'>
-							<div class="row valign-wrapper">
-								<div class="col s2">
-									<img src="http://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img">
-								</div>
-								<div class="col s8">
-									<span>Alpha Tester</span>
-									<br>
-									<small>$500</small>
-								</div>
-								<div class="col s2">
-									<strong class="grey-text right">4</strong>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
+				<div id="roster-container"></div>
 			</div>
 		</div>
 		<div class="col s12 m6">
