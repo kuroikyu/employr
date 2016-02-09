@@ -326,3 +326,14 @@ Game.init(_workers, _companies);
   Game._tick();
   setTimeout(refreshUI, 10);
 })();
+
+
+
+$('#currency-display').click(function() {
+  _workers.push({
+    name:"Betatester",
+    cost:1,
+    production:12
+  });
+  Game.workers.push(Worker(_workers[_workers.length - 1]).init());
+});
