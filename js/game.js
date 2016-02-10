@@ -1,6 +1,16 @@
+// _tick control
+window.onfocus = function () {
+  Game.inverval = 100;
+};
+window.onblur = function () {
+  Game.inverval = 1;
+};
+
+// Game
 var Game = {
   currency: 10,
   workload: 0,
+  inverval: 100,
 
   // DOM elements
   count: undefined,
@@ -71,7 +81,7 @@ var Company = function(options) {
     title: undefined,
 
     produce: function() {
-      Game.currency += this.quantity * this.production / 100;
+      Game.currency += this.quantity * this.production / Game.inverval;
     },
 
     check: function() {
@@ -263,34 +273,34 @@ _companies = [{
   name: "Small company",
   cost: 4,
   production: 1,
-  imgUrl: "default.jpg"
+  imgUrl: "default_company.png"
 }, {
   name: "Medium company",
   cost: 12,
   production: 3,
-  imgUrl: "default.jpg"
+  imgUrl: "default_company.png"
 }, {
   name: "Big company",
   cost: 24,
   production: 5,
-  imgUrl: "default.jpg"
+  imgUrl: "default_company.png"
 }];
 
 _workers = [{
   name: "Intern",
   cost: 10,
   production: 4,
-  imgUrl: "default.jpg"
+  imgUrl: "default_worker.png"
 }, {
   name: "Junior employee",
   cost: 20,
   production: 6,
-  imgUrl: "default.jpg"
+  imgUrl: "default_worker.png"
 }, {
   name: "Senior employee",
   cost: 50,
   production: 8,
-  imgUrl: "default.jpg"
+  imgUrl: "default_worker.png"
 }];
 
 Game.init(_workers, _companies);
@@ -302,7 +312,7 @@ Game.init(_workers, _companies);
 
 (function refreshUI() {
   Game._tick();
-  setTimeout(refreshUI, 10);
+  setTimeout(refreshUI, 1000/Game.inverval);
 })();
 
 
