@@ -2,14 +2,19 @@ var Game = {
   currency: 10,
   workload: 0,
 
+  // DOM elements
   count: undefined,
   roster: undefined,
   market: undefined,
   cpsDisplay: undefined,
   workloadDisplay: undefined,
 
+  // Arrays
   workers: [],
   companies: [],
+
+  // handle for setTimeout
+  handle: undefined,
 
   init: function(_workers, _companies) {
     var self = this;
@@ -174,6 +179,7 @@ var Company = function(options) {
   }, options);
 };
 
+// Workers
 var Worker = function(options) {
   return $.extend({
     quantity: 0,
@@ -191,10 +197,11 @@ var Worker = function(options) {
         Game.currency -= this.cost;
         Game.workload += this.production;
 
+        // Update visuals
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
         this.strongNumber.text(this.quantity);
-        this.colContent.html('<span>' + this.name + '</span> <br> <small>$' + this.cost + '</small>');
+        this.colBigCenter.html('<span>' + this.name + '</span> <br> <small>$' + this.cost + '</small>');
 
         Game.cps();
       };
@@ -203,19 +210,20 @@ var Worker = function(options) {
     init: function() {
       var self = this;
       var row = undefined;
-      var cardPanel = undefined;
+      var card = undefined;
       var rowValign = undefined;
-      var colPicture = undefined;
+      var colSmallLeft = undefined;
       var picture = undefined;
-      var colContent = undefined;
+      var colBigCenter = undefined;
       var content = undefined;
-      var colAmount = undefined;
+      var colSmallRight = undefined;
       var strongNumber = undefined;
 
+      // Create card
       this.row = $('<div />', {
         class: "row"
       });
-      this.cardPanel = $('<div />', {
+      this.card = $('<div />', {
         class: "card-panel hoverable flow-text superTooltipped noselect",
         "data-position": "right",
         "data-delay": "50",
@@ -227,18 +235,18 @@ var Worker = function(options) {
       this.rowValign = $('<div />', {
         class: "row valign-wrapper"
       });
-      this.colPicture = $('<div />', {
+      this.colSmallLeft = $('<div />', {
         class: "col s2"
       });
       this.picture = $('<img />', {
         class: "circle responsive-img valign",
         src: "img/" + this.imgUrl
       });
-      this.colContent = $('<div />', {
+      this.colBigCenter = $('<div />', {
         class: "col s8",
         html: '<span>' + this.name + '</span> <br> <small>$' + this.cost + '</small>'
       });
-      this.colAmount = $('<div />', {
+      this.colSmallRight = $('<div />', {
         class: "col s2"
       });
       this.strongNumber = $('<strong />', {
@@ -247,17 +255,18 @@ var Worker = function(options) {
       });
 
       // Build card
-      Game.roster.append(this.row);
-      this.row.append(this.cardPanel);
-      this.cardPanel.append(this.rowValign);
+      Game.roster.append(this.row.hide());
+      this.row.append(this.card);
+      this.card.append(this.rowValign);
       this.rowValign
-        .append(this.colPicture)
-        .append(this.colContent)
-        .append(this.colAmount);
-      this.colPicture.append(this.picture);
-      this.colAmount.append(this.strongNumber);
+        .append(this.colSmallLeft)
+        .append(this.colBigCenter)
+        .append(this.colSmallRight);
+      this.colSmallLeft.append(this.picture);
+      this.colSmallRight.append(this.strongNumber);
 
-      this.card = this.cardPanel;
+      // Show card
+      this.row.fadeIn('slow');
 
       this.check();
 
@@ -323,4 +332,5 @@ $('#currency-display').click(function() {
     imgUrl: "kuroi.jpg"
   });
   Game.workers.push(Worker(_workers[_workers.length - 1]).init());
+  $('.superTooltipped').superTooltip();
 });

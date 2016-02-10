@@ -31,24 +31,25 @@
 																not supported by any browser */
 		}
 
-		#roster-container .card-panel .row {
+		#roster-container .card-panel .row,
+		#roster-container .row {
 			margin-bottom: 0;
 		}
 
 		.card-panel.hoverable {
 			opacity: 1;
-			transition: opacity .25s ease-out;
-			-moz-transition: opacity .25s ease-out;
-			-webkit-transition: opacity .25s ease-out;
-			-o-transition: opacity .25s ease-out;
+			transition: opacity .25s ease-in-out, box-shadow .25s;
+			-moz-transition: opacity .25s ease-in-out, box-shadow .25s;
+			-webkit-transition: opacity .25s ease-in-out, box-shadow .25s;
+			-o-transition: opacity .25s ease-in-out, box-shadow .25s;
 		}
 
 		.card-panel.hoverable.disabled {
 			opacity: 0.4;
-			transition: opacity .5s ease-out;
-			-moz-transition: opacity .5s ease-out;
-			-webkit-transition: opacity .5s ease-out;
-			-o-transition: opacity .5s ease-out;
+			transition: all .25s;
+			-moz-transition: opacity .25s ease-in-out, box-shadow .25s;
+			-webkit-transition:opacity .25s ease-in-out, box-shadow .25s;
+			-o-transition: opacity .25s ease-in-out, box-shadow .25s;
 		}
 	</style>
 </head>
