@@ -1,16 +1,16 @@
 // _tick control
-window.onfocus = function () {
+window.onfocus = function() {
   Game.inverval = 100;
 };
-window.onblur = function () {
+window.onblur = function() {
   Game.inverval = 1;
 };
 
 // Game
 var Game = {
   currency: 10,
-  workload: 0,
   inverval: 100,
+  workloadCounter: 0,
 
   // DOM elements
   count: undefined,
@@ -67,15 +67,33 @@ var Game = {
     });
 
     this.cpsDisplay.text(cps);
-    this.workloadDisplay.text(Game.workload);
-  }
+  },
 
+  workload: function() {
+    var workload = 0;
+console.log('hi');
+    $.each(this.companies, function(index, company) {
+      $.each(company.costHistory, function(cIndex, cost) {
+        workload -= cost;
+      });
+    });
+
+    $.each(this.workers, function(index, worker) {
+      workload += worker.production * worker.quantity;
+    });
+
+    this.workloadDisplay.text(workload);
+    this.workloadCounter = workload;
+
+    return workload;
+  }
 };
 
 var Company = function(options) {
   return $.extend({
     quantity: 0,
     increase: 1.15,
+    costHistory: [],
 
     button: undefined,
     title: undefined,
@@ -85,13 +103,13 @@ var Company = function(options) {
     },
 
     check: function() {
-      this.card.toggleClass('disabled', this.cost > Game.workload);
+      this.card.toggleClass('disabled', this.cost > Game.workloadCounter);
     },
 
     buy: function() {
-      if (this.cost <= Game.workload) {
-        Game.workload -= this.cost;
+      if (this.cost <= Game.workload()) {
 
+        this.costHistory.push(this.cost);
         this.quantity++;
         this.cost = Math.ceil(this.cost * this.increase);
 
@@ -100,6 +118,8 @@ var Company = function(options) {
         this.strongNumber.text(this.quantity);
         this.colBigCenter.html('<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.cost + '</small>');
         Game.cps();
+        Game.workload();
+
       };
     },
 
@@ -188,7 +208,6 @@ var Worker = function(options) {
     buy: function() {
       if (this.cost <= Game.currency) {
         Game.currency -= this.cost;
-        Game.workload += this.production;
 
         // Update visuals
         this.quantity++;
@@ -197,6 +216,7 @@ var Worker = function(options) {
         this.colBigCenter.html('<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">attach_money</i>' + this.cost + '</small>');
 
         Game.cps();
+        Game.workload();
       };
     },
 
@@ -312,7 +332,7 @@ Game.init(_workers, _companies);
 
 (function refreshUI() {
   Game._tick();
-  setTimeout(refreshUI, 1000/Game.inverval);
+  setTimeout(refreshUI, 1000 / Game.inverval);
 })();
 
 
