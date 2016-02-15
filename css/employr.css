@@ -12,16 +12,14 @@
   user-select: none;
   /* non-prefixed version, currently not supported by any browser */
 }
-
 #roster-container .card-panel .row,
-#roster-container .row {
+#roster-container .row,
+#market-container .container .card-panel .row,
+#market-container .row,
+#upgrades-container .container .card-panel .row,
+#upgrades-container .row {
   margin-bottom: 0;
 }
-#market-container-container .card-panel .row,
-#market-container .row {
-  margin-bottom: 0;
-}
-
 .card-panel.hoverable {
   opacity: 1;
   transition: opacity .25s ease-in-out, box-shadow .25s;
@@ -29,11 +27,10 @@
   -webkit-transition: opacity .25s ease-in-out, box-shadow .25s;
   -o-transition: opacity .25s ease-in-out, box-shadow .25s;
 }
-
 .card-panel.hoverable.disabled {
   opacity: 0.4;
   transition: all .25s;
   -moz-transition: opacity .25s ease-in-out, box-shadow .25s;
-  -webkit-transition:opacity .25s ease-in-out, box-shadow .25s;
+  -webkit-transition: opacity .25s ease-in-out, box-shadow .25s;
   -o-transition: opacity .25s ease-in-out, box-shadow .25s;
 }

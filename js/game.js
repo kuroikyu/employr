@@ -45,6 +45,7 @@ var Game = {
       self.companies.push(newCompany);
     });
     this.cps();
+    this.workload();
   },
 
   _tick: function() {
@@ -71,10 +72,11 @@ var Game = {
 
   workload: function() {
     var workload = 0;
-console.log('hi');
     $.each(this.companies, function(index, company) {
       $.each(company.costHistory, function(cIndex, cost) {
-        workload -= cost;
+        if (cIndex < company.quantity) {
+          workload -= cost;
+        }
       });
     });
 
@@ -93,7 +95,12 @@ var Company = function(options) {
   return $.extend({
     quantity: 0,
     increase: 1.15,
-    costHistory: [],
+    // costHistory: [],
+
+    cost: function() {
+
+      return Math.ceil(this.costHistory[this.quantity] * this.increase);
+    },
 
     button: undefined,
     title: undefined,
@@ -103,20 +110,20 @@ var Company = function(options) {
     },
 
     check: function() {
-      this.card.toggleClass('disabled', this.cost > Game.workloadCounter);
+      this.card.toggleClass('disabled', this.costHistory[this.quantity] > Game.workloadCounter);
     },
 
     buy: function() {
-      if (this.cost <= Game.workload()) {
+      if (this.costHistory[this.quantity] <= Game.workload()) {
 
-        this.costHistory.push(this.cost);
+        this.costHistory.push(this.cost());
         this.quantity++;
-        this.cost = Math.ceil(this.cost * this.increase);
+        // this.cost = Math.ceil(this.cost * this.increase);
 
         // Update visuals
-        this.cost = Math.ceil(this.cost * this.increase);
+        // this.cost = Math.ceil(this.cost * this.increase);
         this.strongNumber.text(this.quantity);
-        this.colBigCenter.html('<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.cost + '</small>');
+        this.colBigCenter.html('<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.costHistory[this.quantity] + '</small>');
         Game.cps();
         Game.workload();
 
@@ -159,14 +166,15 @@ var Company = function(options) {
         src: "img/" + this.imgUrl
       });
       this.colBigCenter = $('<div />', {
-        class: "col s8",
-        html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.cost + '</small>'
+        class: "col s7",
+        html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.costHistory[this.quantity] + '</small>'
       });
       this.colSmallRight = $('<div />', {
-        class: "col s2"
+        class: "col s3"
       });
       this.strongNumber = $('<strong />', {
-        class: "grey-text left",
+        class: "left",
+        style: "opacity: 0.5;",
         text: this.quantity
       });
 
@@ -249,21 +257,22 @@ var Worker = function(options) {
         class: "row valign-wrapper"
       });
       this.colSmallLeft = $('<div />', {
-        class: "col s2"
+        class: "col s3"
       });
       this.picture = $('<img />', {
         class: "circle responsive-img valign",
         src: "img/" + this.imgUrl
       });
       this.colBigCenter = $('<div />', {
-        class: "col s8",
+        class: "col s7",
         html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">attach_money</i>' + this.cost + '</small>'
       });
       this.colSmallRight = $('<div />', {
         class: "col s2"
       });
       this.strongNumber = $('<strong />', {
-        class: "grey-text right",
+        class: "right",
+        style: "opacity: 0.5;",
         text: this.quantity
       });
 
@@ -291,17 +300,17 @@ var Worker = function(options) {
 
 _companies = [{
   name: "Small company",
-  cost: 4,
+  costHistory: [4],
   production: 1,
   imgUrl: "default_company.png"
 }, {
   name: "Medium company",
-  cost: 12,
+  costHistory: [12],
   production: 3,
   imgUrl: "default_company.png"
 }, {
   name: "Big company",
-  cost: 24,
+  costHistory: [24],
   production: 5,
   imgUrl: "default_company.png"
 }];
@@ -336,14 +345,23 @@ Game.init(_workers, _companies);
 })();
 
 
-
+// Test for adding objects to both arrays
 $('#currency-display').click(function() {
   _workers.push({
-    name: "Mega-hacker-uber-god",
+    name: "H4k3r",
     cost: 1,
     production: 12,
     imgUrl: "kuroi.jpg"
   });
   Game.workers.push(Worker(_workers[_workers.length - 1]).init());
+  $('.superTooltipped').superTooltip();
+
+  _companies.push({
+    name: "Micro$oft",
+    costHistory: [1000],
+    production: 500,
+    imgUrl: "kuroi.jpg"
+  });
+  Game.companies.push(Company(_companies[_companies.length - 1]).init());
   $('.superTooltipped').superTooltip();
 });
