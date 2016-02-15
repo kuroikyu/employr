@@ -45,6 +45,7 @@ var Game = {
       self.companies.push(newCompany);
     });
     this.cps();
+    this.workload();
   },
 
   _tick: function() {
@@ -71,7 +72,6 @@ var Game = {
 
   workload: function() {
     var workload = 0;
-console.log('hi');
     $.each(this.companies, function(index, company) {
       $.each(company.costHistory, function(cIndex, cost) {
         workload -= cost;
@@ -159,14 +159,15 @@ var Company = function(options) {
         src: "img/" + this.imgUrl
       });
       this.colBigCenter = $('<div />', {
-        class: "col s8",
+        class: "col s7",
         html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.cost + '</small>'
       });
       this.colSmallRight = $('<div />', {
-        class: "col s2"
+        class: "col s3"
       });
       this.strongNumber = $('<strong />', {
-        class: "grey-text left",
+        class: "left",
+        style: "opacity: 0.5;",
         text: this.quantity
       });
 
@@ -249,21 +250,22 @@ var Worker = function(options) {
         class: "row valign-wrapper"
       });
       this.colSmallLeft = $('<div />', {
-        class: "col s2"
+        class: "col s3"
       });
       this.picture = $('<img />', {
         class: "circle responsive-img valign",
         src: "img/" + this.imgUrl
       });
       this.colBigCenter = $('<div />', {
-        class: "col s8",
+        class: "col s7",
         html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">attach_money</i>' + this.cost + '</small>'
       });
       this.colSmallRight = $('<div />', {
         class: "col s2"
       });
       this.strongNumber = $('<strong />', {
-        class: "grey-text right",
+        class: "right",
+        style: "opacity: 0.5;",
         text: this.quantity
       });
 
@@ -339,7 +341,7 @@ Game.init(_workers, _companies);
 
 $('#currency-display').click(function() {
   _workers.push({
-    name: "Mega-hacker-uber-god",
+    name: "H4k3r",
     cost: 1,
     production: 12,
     imgUrl: "kuroi.jpg"

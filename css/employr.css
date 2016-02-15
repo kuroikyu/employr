@@ -14,11 +14,11 @@
 }
 
 #roster-container .card-panel .row,
-#roster-container .row {
-  margin-bottom: 0;
-}
-#market-container-container .card-panel .row,
-#market-container .row {
+#roster-container .row,
+#market-container .container .card-panel .row,
+#market-container .row,
+#upgrades-container .container .card-panel .row,
+#upgrades-container .row {
   margin-bottom: 0;
 }
 
