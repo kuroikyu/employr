@@ -201,6 +201,7 @@ var Company = function(options) {
 };
 
 // Workers
+// TODO rework workers cost
 var Worker = function(options) {
   return $.extend({
     quantity: 0,
@@ -309,9 +310,19 @@ _companies = [{
   production: 3,
   imgUrl: "default_company.png"
 }, {
+  name: "Public sector dpt.",
+  costHistory: [32],
+  production: 10,
+  imgUrl: "default_company.png"
+}, {
   name: "Big company",
-  costHistory: [24],
-  production: 5,
+  costHistory: [64],
+  production: 25,
+  imgUrl: "default_company.png"
+}, {
+  name: "International company",
+  costHistory: [128],
+  production: 54,
   imgUrl: "default_company.png"
 }];
 
@@ -329,6 +340,16 @@ _workers = [{
   name: "Senior employee",
   cost: 50,
   production: 8,
+  imgUrl: "default_worker.png"
+},{
+  name: "Subcontractor",
+  cost: 75,
+  production: 10,
+  imgUrl: "default_worker.png"
+},{
+  name: "Contractor",
+  cost: 100,
+  production: 12,
   imgUrl: "default_worker.png"
 }];
 
@@ -349,8 +370,8 @@ Game.init(_workers, _companies);
 $('#currency-display').click(function() {
   _workers.push({
     name: "H4k3r",
-    cost: 1,
-    production: 12,
+    cost: 20,
+    production: 20,
     imgUrl: "kuroi.jpg"
   });
   Game.workers.push(Worker(_workers[_workers.length - 1]).init());
