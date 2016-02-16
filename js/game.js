@@ -100,7 +100,6 @@ var Company = function(options) {
       return Math.ceil(this.costHistory[this.quantity] * this.increase);
     },
 
-    button: undefined,
     title: undefined,
 
     produce: function() {
@@ -133,7 +132,6 @@ var Company = function(options) {
       var colSmallLeft = undefined;
       var picture = undefined;
       var colBigCenter = undefined;
-      var content = undefined;
       var colSmallRight = undefined;
       var strongNumber = undefined;
 
@@ -205,7 +203,6 @@ var Worker = function(options) {
       return Math.ceil(this.costHistory[this.quantity] * this.increase);
     },
 
-    button: undefined,
     card: undefined,
 
     check: function() {
@@ -236,7 +233,6 @@ var Worker = function(options) {
       var colSmallLeft = undefined;
       var picture = undefined;
       var colBigCenter = undefined;
-      var content = undefined;
       var colSmallRight = undefined;
       var strongNumber = undefined;
 
