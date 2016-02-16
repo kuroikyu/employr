@@ -23,9 +23,7 @@ var Game = {
   workers: [],
   companies: [],
 
-  // handle for setTimeout
-  handle: undefined,
-
+  // Initialize function + other functions
   init: function(_workers, _companies) {
     var self = this;
 
@@ -93,14 +91,15 @@ var Game = {
 
 var Company = function(options) {
   return $.extend({
+    // Additional variables
     quantity: 0,
     increase: 1.15,
+    title: undefined,
 
+    // Functions
     cost: function() {
       return Math.ceil(this.costHistory[this.quantity] * this.increase);
     },
-
-    title: undefined,
 
     produce: function() {
       Game.currency += this.quantity * this.production / Game.inverval;
@@ -124,6 +123,7 @@ var Company = function(options) {
       };
     },
 
+    // Initialize function
     init: function() {
       var self = this;
       var row = undefined;
@@ -135,7 +135,7 @@ var Company = function(options) {
       var colSmallRight = undefined;
       var strongNumber = undefined;
 
-      // Create card
+      // Create all elements in a card
       this.row = $('<div />', {
         class: "row"
       });
@@ -186,24 +186,23 @@ var Company = function(options) {
       this.row.fadeIn('slow');
 
       this.check();
-
       return this;
     }
-
   }, options);
 };
 
 // Workers
 var Worker = function(options) {
   return $.extend({
+    // Additional variables
     quantity: 0,
     increase: 1.11,
+    card: undefined,
 
+    // Functions
     cost: function() {
       return Math.ceil(this.costHistory[this.quantity] * this.increase);
     },
-
-    card: undefined,
 
     check: function() {
       this.card.toggleClass('disabled', this.costHistory[this.quantity] > Game.currency);
@@ -225,6 +224,7 @@ var Worker = function(options) {
       };
     },
 
+    // Initialize function
     init: function() {
       var self = this;
       var row = undefined;
@@ -236,7 +236,7 @@ var Worker = function(options) {
       var colSmallRight = undefined;
       var strongNumber = undefined;
 
-      // Create card
+      // Create all elements in a card
       this.row = $('<div />', {
         class: "row"
       });
@@ -283,14 +283,12 @@ var Worker = function(options) {
       this.colSmallLeft.append(this.picture);
       this.colSmallRight.append(this.strongNumber);
 
-      // Show card
+      // Display card
       this.row.fadeIn('slow');
 
       this.check();
-
       return this;
     }
-
   }, options);
 };
 
@@ -336,12 +334,12 @@ _workers = [{
   costHistory: [50],
   production: 8,
   imgUrl: "default_worker.png"
-},{
+}, {
   name: "Subcontractor",
   costHistory: [75],
   production: 10,
   imgUrl: "default_worker.png"
-},{
+}, {
   name: "Contractor",
   costHistory: [100],
   production: 12,
