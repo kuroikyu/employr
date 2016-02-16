@@ -16,20 +16,23 @@ var Game = {
   count: undefined,
   roster: undefined,
   market: undefined,
+  shop: undefined,
   cpsDisplay: undefined,
   workloadDisplay: undefined,
 
   // Arrays
   workers: [],
   companies: [],
+  upgrades: [],
 
   // Initialize function + other functions
-  init: function(_workers, _companies) {
+  init: function(_workers, _companies, _upgrades) {
     var self = this;
 
     this.count = $('#currency-display');
     this.roster = $('#roster-container');
     this.market = $('#market-container');
+    this.shop = $('#upgrades-container');
     this.cpsDisplay = $('#cps-display');
     this.workloadDisplay = $('#workload-display');
 
@@ -41,6 +44,11 @@ var Game = {
     $.each(_companies, function(index, _company) {
       var newCompany = Company(_company).init();
       self.companies.push(newCompany);
+    });
+
+    $.each(_upgrades, function(index, _upgrade) {
+      var newUpgrade = Upgrade(_upgrade).init();
+      self.upgrades.push(newUpgrade);
     });
     this.cps();
     this.workload();
@@ -78,6 +86,14 @@ var Game = {
       });
     });
 
+    $.each(this.upgrades, function(index, upgrade) {
+      $.each(upgrade.costHistory, function(uIndex, cost) {
+        if (uIndex < upgrade.quantity) {
+          workload -= cost;
+        }
+      });
+    });
+
     $.each(this.workers, function(index, worker) {
       workload += worker.production * worker.quantity;
     });
@@ -94,7 +110,6 @@ var Company = function(options) {
     // Additional variables
     quantity: 0,
     increase: 1.15,
-    title: undefined,
 
     // Functions
     cost: function() {
@@ -292,6 +307,109 @@ var Worker = function(options) {
   }, options);
 };
 
+// Upgrades
+var Upgrade = function(options) {
+  return $.extend({
+    // Additional variables
+    quantity: 0,
+    increase: 1.15,
+
+    // Functions
+    cost: function() {
+      return Math.ceil(this.costHistory[this.quantity] * this.increase);
+    },
+
+    produce: function() {
+      Game.currency += this.quantity * this.production / Game.inverval;
+    },
+
+    check: function() {
+      this.card.toggleClass('disabled', this.costHistory[this.quantity] > Game.workloadCounter);
+    },
+
+    buy: function() {
+      if (this.costHistory[this.quantity] <= Game.workload()) {
+
+        this.costHistory.push(this.cost());
+        this.quantity++;
+
+        // Update visuals
+        this.strongNumber.text(this.quantity);
+        this.colBigCenter.html('<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.costHistory[this.quantity] + '</small>');
+        Game.cps();
+        Game.workload();
+      };
+    },
+
+    // Initialize function
+    init: function() {
+      var self = this;
+      var row = undefined;
+      var card = undefined;
+      var rowValign = undefined;
+      var colSmallLeft = undefined;
+      var picture = undefined;
+      var colBigCenter = undefined;
+      var colSmallRight = undefined;
+      var strongNumber = undefined;
+
+      // Create all elements in a card
+      this.row = $('<div />', {
+        class: "row"
+      });
+      this.card = $('<div />', {
+        class: "card-panel hoverable flow-text superTooltipped noselect",
+        "data-position": "left",
+        "data-delay": "50",
+        "data-tooltip": '<p><i class="material-icons left">attach_money</i>Income +<strong>' + this.production + '/s</strong></p>',
+        click: function() {
+          self.buy();
+        }
+      });
+      this.rowValign = $('<div />', {
+        class: "row valign-wrapper"
+      });
+      this.colSmallLeft = $('<div />', {
+        class: "col s3"
+      });
+      this.picture = $('<img />', {
+        class: "circle responsive-img valign",
+        src: "img/" + this.imgUrl
+      });
+      this.colBigCenter = $('<div />', {
+        class: "col s7",
+        html: '<span>' + this.name + '</span> <br> <small  class="valign-wrapper"><i class="material-icons small left">person</i>' + this.costHistory[this.quantity] + '</small>'
+      });
+      this.colSmallRight = $('<div />', {
+        class: "col s2"
+      });
+      this.strongNumber = $('<strong />', {
+        class: "left",
+        style: "opacity: 0.5;",
+        text: this.quantity
+      });
+
+      // Build card
+      Game.shop.append(this.row.hide());
+      this.row.append(this.card);
+      this.card.append(this.rowValign);
+      this.rowValign
+        .append(this.colSmallLeft)
+        .append(this.colBigCenter)
+        .append(this.colSmallRight);
+      this.colSmallRight.append(this.strongNumber);
+      this.colSmallLeft.append(this.picture);
+
+      // Show card
+      this.row.fadeIn('slow');
+
+      this.check();
+      return this;
+    }
+  }, options);
+};
+
+// Objects list
 _companies = [{
   name: "Small company",
   costHistory: [4],
@@ -346,7 +464,14 @@ _workers = [{
   imgUrl: "default_worker.png"
 }];
 
-Game.init(_workers, _companies);
+_upgrades = [{
+  name: "Do more hours!",
+  costHistory: [4],
+  production: 1.5,
+  imgUrl: "default_worker.png"
+}]
+
+Game.init(_workers, _companies, _upgrades);
 
 
 
