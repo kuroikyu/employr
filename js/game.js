@@ -5,10 +5,13 @@ window.onfocus = function() {
 window.onblur = function() {
   Game.inverval = 1;
 };
+Number.prototype.round = function(places) {
+  return +(Math.round(this + "e+" + places)  + "e-" + places);
+}
 
 // Game
 var Game = {
-  currency: 10,
+  currency: 1000,
   inverval: 100,
   workloadCounter: 0,
 
@@ -77,7 +80,7 @@ var Game = {
       cps += company.production * company.quantity;
     });
 
-    this.cpsDisplay.text(cps);
+    this.cpsDisplay.text(cps.round(2));
   },
 
   workload: function() {
@@ -102,7 +105,7 @@ var Game = {
       workload += worker.production * worker.quantity;
     });
 
-    this.workloadDisplay.text(workload);
+    this.workloadDisplay.text(workload.round(2));
     this.workloadCounter = workload;
 
     return workload;
@@ -350,7 +353,7 @@ var Upgrade = function(options) {
           if (this.costHistory[this.quantity] <= Game.workload()) {
             bought = true;
             Game.workers[0].production += this.production;
-            Game.workers[0].card.attr("data-tooltip", '<p><i class="material-icons left">people</i>Workload +<strong>' + Game.workers[0].production + '/s</strong></p>')
+            Game.workers[0].card.attr("data-tooltip", '<p><i class="material-icons left">people</i>Workload +<strong>' + Game.workers[0].production.round(2) + '/s</strong></p>')
           };
           break;
 
@@ -360,7 +363,7 @@ var Upgrade = function(options) {
 
             bought = true;
             Game.companies[0].production += this.production;
-            Game.companies[0].card.attr("data-tooltip", '<p><i class="material-icons left">attach_money</i>Income +<strong>' + Game.companies[0].production + '/s</strong></p>')
+            Game.companies[0].card.attr("data-tooltip", '<p><i class="material-icons left">attach_money</i>Income +<strong>' + Game.companies[0].production.round(2) + '/s</strong></p>')
           };
       };
 
