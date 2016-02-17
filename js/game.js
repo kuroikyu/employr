@@ -1,12 +1,35 @@
 // _tick control
 window.onfocus = function() {
   Game.inverval = 100;
-};
+}
 window.onblur = function() {
   Game.inverval = 1;
-};
+}
+
+// other functions
 Number.prototype.round = function(places) {
-  return +(Math.round(this + "e+" + places)  + "e-" + places);
+  return +(Math.round(this + "e+" + places) + "e-" + places);
+}
+
+function pickFromArray(myArray) {
+  var imgIndex = undefined;
+  var imgUrl = undefined;
+
+  imgIndex = Math.ceil(Math.random() * (myArray.length - 1));
+  // console.log('\nArray length: ' + (myArray.length - 1));
+
+  imgUrl = myArray[imgIndex];
+  // console.log('url: ' + imgUrl);
+  // console.log('index: ' + imgIndex);
+
+  if (imgIndex > 0) {
+    // console.log('delete index: ' + imgIndex);
+    myArray.splice(imgIndex, 1);
+  }
+  // console.log('new length: ' + myArray.length);
+  // console.log('/// END ///');
+
+  return imgUrl;
 }
 
 // Game
@@ -25,7 +48,9 @@ var Game = {
 
   // Arrays
   workers: [],
+  workerImages: ['default_worker.png', 'worker0.png', 'worker1.png', 'worker2.png', 'worker3.png', 'worker4.png'],
   companies: [],
+  companyImages: ['default_company.png', 'company0.png', 'company1.png', 'company2.png', 'company3.png', 'company4.png'],
   upgrades: [],
 
   // Initialize function + other functions
@@ -117,7 +142,7 @@ var Company = function(options) {
     // Additional variables
     quantity: 0,
     increase: 1.15,
-    imgUrl: "default_company.png",
+    imgUrl: pickFromArray(Game.companyImages),
 
     // Functions
     cost: function() {
@@ -221,7 +246,7 @@ var Worker = function(options) {
     quantity: 0,
     increase: 1.11,
     card: undefined,
-    imgUrl: "default_worker.png",
+    imgUrl:  pickFromArray(Game.workerImages),
 
 
     // Functions
@@ -554,7 +579,7 @@ $('#currency-display').click(function() {
   $('.superTooltipped').superTooltip();
 
   _companies.push({
-    name: "Micro$oft",
+    name: "Kuroi Enterprises",
     costHistory: [1000],
     production: 500,
     imgUrl: "kuroi.jpg"
