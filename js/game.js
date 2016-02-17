@@ -34,7 +34,7 @@ function pickFromArray(myArray) {
 
 // Game
 var Game = {
-  currency: 1000,
+  currency: 10,
   inverval: 100,
   workloadCounter: 0,
 
@@ -55,7 +55,7 @@ var Game = {
 
   // Initialize function + other functions
   init: function(_workers, _companies, _upgrades) {
-    var self = this;
+    var that = this;
 
     this.count = $('#currency-display');
     this.roster = $('#roster-container');
@@ -66,17 +66,17 @@ var Game = {
 
     $.each(_workers, function(index, _worker) {
       var newWorker = Worker(_worker).init();
-      self.workers.push(newWorker);
+      that.workers.push(newWorker);
     });
 
     $.each(_companies, function(index, _company) {
       var newCompany = Company(_company).init();
-      self.companies.push(newCompany);
+      that.companies.push(newCompany);
     });
 
     $.each(_upgrades, function(index, _upgrade) {
       var newUpgrade = Upgrade(_upgrade).init();
-      self.upgrades.push(newUpgrade);
+      that.upgrades.push(newUpgrade);
     });
     this.cps();
     this.workload();
@@ -173,7 +173,7 @@ var Company = function(options) {
 
     // Initialize function
     init: function() {
-      var self = this;
+      var that = this;
       var row = undefined;
       var card = undefined;
       var rowValign = undefined;
@@ -193,7 +193,7 @@ var Company = function(options) {
         "data-delay": "50",
         "data-tooltip": '<p><i class="material-icons left">attach_money</i>Income +<strong>' + this.production + '/s</strong></p>',
         click: function() {
-          self.buy();
+          that.buy();
         }
       });
       this.rowValign = $('<div />', {
@@ -246,7 +246,7 @@ var Worker = function(options) {
     quantity: 0,
     increase: 1.11,
     card: undefined,
-    imgUrl:  pickFromArray(Game.workerImages),
+    imgUrl: pickFromArray(Game.workerImages),
 
 
     // Functions
@@ -276,7 +276,7 @@ var Worker = function(options) {
 
     // Initialize function
     init: function() {
-      var self = this;
+      var that = this;
       var row = undefined;
       var card = undefined;
       var rowValign = undefined;
@@ -296,7 +296,7 @@ var Worker = function(options) {
         "data-delay": "50",
         "data-tooltip": '<p><i class="material-icons left">person</i>Workload +<strong>' + this.production + '</strong></p>',
         click: function() {
-          self.buy();
+          that.buy();
         }
       });
       this.rowValign = $('<div />', {
@@ -347,12 +347,14 @@ var Upgrade = function(options) {
   return $.extend({
     // Additional variables
     quantity: 0,
-    increase: 1.15,
+    increase: 1.7,
 
     icon: undefined,
     iconLabel: undefined,
     sourceArray: undefined,
     currency: undefined,
+    imgUrl: undefined,
+    side: undefined,
 
     // Functions
     cost: function() {
@@ -377,8 +379,6 @@ var Upgrade = function(options) {
         case "worker":
           if (this.costHistory[this.quantity] <= Game.workload()) {
             bought = true;
-            Game.workers[0].production += this.production;
-            Game.workers[0].card.attr("data-tooltip", '<p><i class="material-icons left">people</i>Workload +<strong>' + Game.workers[0].production.round(2) + '/s</strong></p>')
           };
           break;
 
@@ -387,12 +387,12 @@ var Upgrade = function(options) {
             Game.currency -= this.costHistory[this.quantity];
 
             bought = true;
-            Game.companies[0].production += this.production;
-            Game.companies[0].card.attr("data-tooltip", '<p><i class="material-icons left">attach_money</i>Income +<strong>' + Game.companies[0].production.round(2) + '/s</strong></p>')
           };
       };
 
       if (bought) {
+        this.sourceArray.production += this.production;
+        this.sourceArray.card.attr("data-tooltip", '<p><i class="material-icons left">' + this.icon + '</i>' + this.iconLabel + ' +<strong>' + this.sourceArray.production.round(2) + '/s</strong></p>')
 
         this.costHistory.push(this.cost());
         this.quantity++;
@@ -410,23 +410,25 @@ var Upgrade = function(options) {
 
     // Initialize function
     init: function() {
-      var self = this;
+      var that = this;
 
-      // TODO implement this into the previous functions
-      switch (self.type) {
+      switch (this.type) {
         case "worker":
-          self.icon = "person";
-          self.iconLabel = "Workload";
-          self.sourceArray = Game.workers[0];
-          self.currency = Game.workload();
+          this.icon = "person";
+          this.iconLabel = "Workload";
+          this.sourceArray = Game.workers[0];
+          this.currency = Game.workload();
+          this.imgUrl = Game.workers[0].imgUrl;
+          this.side = 'left';
           break;
         default:
-          self.icon = "attach_money";
-          self.iconLabel = "Income";
-          self.sourceArray = Game.companies[0];
-          self.currency = Game.currency;
+          this.icon = "attach_money";
+          this.iconLabel = "Income";
+          this.sourceArray = Game.companies[0];
+          this.currency = Game.currency;
+          this.imgUrl = Game.companies[0].imgUrl;
+          this.side = 'right';
       }
-
 
       var row = undefined;
       var card = undefined;
@@ -443,11 +445,11 @@ var Upgrade = function(options) {
       });
       this.card = $('<div />', {
         class: "card-panel hoverable flow-text superTooltipped noselect",
-        "data-position": "left",
+        "data-position": this.side,
         "data-delay": "50",
-        "data-tooltip": '<p><i class="material-icons left">attach_money</i>Income +<strong>' + this.production + '/s</strong></p>',
+        "data-tooltip": '<p><i class="material-icons left">' + this.icon + '</i>' + this.iconLabel + ' +<strong>' + this.production + '/s</strong></p>',
         click: function() {
-          self.buy();
+          that.buy();
         }
       });
       this.rowValign = $('<div />', {
@@ -542,16 +544,12 @@ _upgrades = [{
   name: "Do more hours!",
   type: "worker",
   costHistory: [12],
-  production: 0.5,
-  imgUrl: "default_worker.png",
-  icon: "person"
+  production: 0.5
 }, {
   name: "Give me more money!",
   type: "company",
   costHistory: [15],
-  production: 0.2,
-  imgUrl: "default_company.png",
-  icon: "attach_money"
+  production: 0.2
 }]
 
 Game.init(_workers, _companies, _upgrades);
