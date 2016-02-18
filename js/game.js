@@ -56,7 +56,7 @@ var Game = {
   // Initialize function + other functions
   init: function(_workers, _companies, _upgrades) {
     var that = this;
-
+    
     this.count = $('#currency-display');
     this.roster = $('#roster-container');
     this.market = $('#market-container');
@@ -416,17 +416,17 @@ var Upgrade = function(options) {
         case "worker":
           this.icon = "person";
           this.iconLabel = "Workload";
-          this.sourceArray = Game.workers[0];
+          this.sourceArray = Game.workers[this.target];
           this.currency = Game.workload();
-          this.imgUrl = Game.workers[0].imgUrl;
+          this.imgUrl = Game.workers[this.target].imgUrl;
           this.side = 'left';
           break;
         default:
           this.icon = "attach_money";
           this.iconLabel = "Income";
-          this.sourceArray = Game.companies[0];
+          this.sourceArray = Game.companies[this.target];
           this.currency = Game.currency;
-          this.imgUrl = Game.companies[0].imgUrl;
+          this.imgUrl = Game.companies[this.target].imgUrl;
           this.side = 'right';
       }
 
@@ -543,11 +543,13 @@ _workers = [{
 _upgrades = [{
   name: "Do more hours!",
   type: "worker",
+  target: 0,
   costHistory: [12],
   production: 0.5
 }, {
   name: "Give me more money!",
   type: "company",
+  target: 0,
   costHistory: [15],
   production: 0.2
 }]
